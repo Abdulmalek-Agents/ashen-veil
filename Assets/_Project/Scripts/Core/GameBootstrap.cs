@@ -7,7 +7,6 @@ namespace InventixGames.Core
     {
         [SerializeField] private string firstSceneToLoad = "MainMenu";
         [SerializeField] private bool dontDestroyOnLoad = true;
-
         private void Awake()
         {
             if (dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
@@ -18,7 +17,6 @@ namespace InventixGames.Core
             ServiceLocator.Register<Mission.IMissionService>(gameObject.AddComponent<Mission.MissionManager>());
             ServiceLocator.Register<ICheckpointService>(gameObject.AddComponent<CheckpointService>());
             ServiceLocator.Register<IAICopilotService>(gameObject.AddComponent<ClaudeCopilotService>());
-            Debug.Log("[GameBootstrap] Core services registered.");
         }
         private void Start() => SceneLoader.LoadSceneAsync(firstSceneToLoad);
     }

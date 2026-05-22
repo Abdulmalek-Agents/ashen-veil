@@ -9,11 +9,11 @@ namespace InventixGames.UI
     {
         [SerializeField] private TMP_Text missionTitleText, objectiveText;
         [SerializeField] private Slider missionProgressBar;
-        private IMissionService _mission;
-        private void OnEnable() { _mission = ServiceLocator.Get<IMissionService>(); _mission.OnMissionStarted += OnStart; _mission.OnObjectiveUpdated += OnObjective; _mission.OnMissionCompleted += OnComplete; }
-        private void OnDisable() { if (_mission == null) return; _mission.OnMissionStarted -= OnStart; _mission.OnObjectiveUpdated -= OnObjective; _mission.OnMissionCompleted -= OnComplete; }
-        private void OnStart(MissionDataSO m) { if (missionTitleText) missionTitleText.text = m.displayName; if (objectiveText && m.objectives.Count > 0) objectiveText.text = m.objectives[0].description; }
-        private void OnObjective(MissionObjective o) { if (objectiveText) objectiveText.text = o.description; }
-        private void OnComplete(MissionDataSO m) { if (objectiveText) objectiveText.text = "Victory!"; }
+        private IMissionService _m;
+        private void OnEnable() { _m = ServiceLocator.Get<IMissionService>(); _m.OnMissionStarted += S; _m.OnObjectiveUpdated += O; _m.OnMissionCompleted += C; }
+        private void OnDisable() { if (_m == null) return; _m.OnMissionStarted -= S; _m.OnObjectiveUpdated -= O; _m.OnMissionCompleted -= C; }
+        private void S(MissionDataSO m) { if (missionTitleText) missionTitleText.text = m.displayName; if (objectiveText && m.objectives.Count > 0) objectiveText.text = m.objectives[0].description; }
+        private void O(MissionObjective o) { if (objectiveText) objectiveText.text = o.description; }
+        private void C(MissionDataSO m) { if (objectiveText) objectiveText.text = "Victory!"; }
     }
 }
