@@ -7,12 +7,12 @@
 |---|---|
 | **Genre** | Stylized Souls-like Action RPG |
 | **Platforms** | PC (Steam) primary |
-| **Engine** | Unity 2022.3 LTS + URP |
+| **Engine** | Unity **6 LTS (6000.4.4f1)** + URP |
 | **Target frame-rate** | 60 fps on mid-range PC |
 | **Mission 1 scope** | Tutorial duel → first bonfire → first Hollow Lord (tutorial boss) |
 | **Designed for** | 6 missions (one per Hollow Lord biome) |
 | **Runtime AI features** | **None** — the shipping game is fully offline and self-contained |
-| **AI in development** | Claude Code & Claude Agents are used by the studio to draft GDDs, generate C#, and write lore. See [docs/05_AI_ASSISTED_DEVELOPMENT.md](docs/05_AI_ASSISTED_DEVELOPMENT.md). |
+| **AI in development** | Claude Code & Claude Agents are used by the studio. See [docs/05_AI_ASSISTED_DEVELOPMENT.md](docs/05_AI_ASSISTED_DEVELOPMENT.md). |
 
 ## Why this game
 
@@ -31,14 +31,14 @@ Detailed evidence in [docs/01_IDEATION_AND_TRENDS.md](docs/01_IDEATION_AND_TREND
 ashen-veil/
 ├── README.md, CHANGELOG.md, LICENSE, .gitignore
 ├── docs/                              (7 critic-approved design docs)
-└── Assets/_Project/                   (Unity-ready scripts, ScriptableObject guide, scenes/prefabs/art/audio folders)
+└── Assets/_Project/
     └── Scripts/{Core, Dialogue, Gameplay, UI}
 ```
 
 ## Quick start
 
 1. Read `docs/07_UNITY_SETUP_GUIDE.md`.
-2. New Unity 2022.3 LTS URP project; copy `Assets/_Project/` in.
+2. New Unity **6 LTS (6000.4.4f1)** URP project; copy `Assets/_Project/` in.
 3. Import: Fantasy Castle Environment, Stylized Dungeons, BoZo Characters, Fantasy Monsters Bundle, Stylized Fantasy Creatures #2, Anime Powers Pack, Magic Arsenal, Spells Pack, 100 Special Skills FX, Character Controller Pro, Traversal Pro, Realistic Blood VFX, Heat UI, Cutscene Engine, Skill Tree Builder — all in your Inventix inventory.
 4. Open `Scenes/Bootstrap.unity` → Play.
 
@@ -52,6 +52,7 @@ ashen-veil/
 | GDD v1.0 approved | ✅ |
 | Architecture & scripts | ✅ |
 | v0.2 — runtime LLM removed, scripted dialogue stack | ✅ |
+| v0.2.1 — Unity 6 LTS (6000.4.4f1) target | ✅ |
 | Mission 1 scene authored | ⏳ |
 | Missions 2–6 outlined | ✅ (data-driven) |
 

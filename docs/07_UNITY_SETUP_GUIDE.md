@@ -1,14 +1,14 @@
 # 🛠️ Unity Setup Guide — Ashen Veil
 
+> **v0.2.1: Unity 6 LTS (6000.4.4f1) target. No proxy server, no API key, no internet config required.**
+
 ## Prerequisites
-- Unity 2022.3.30f1 LTS + Windows IL2CPP
+- Unity Hub + Unity **6 LTS (6000.4.4f1)** with Windows IL2CPP module
 - All assets from `03_ASSET_PLAN.md` in your Inventix account
-- Node.js 18+ for AI proxy
-- Anthropic API key
 
 ## Step 1 — New Unity project
 
-Unity Hub → New → 3D (URP) Core → name `AshenVeil`.
+Unity Hub → New → select Editor **6000.4.4f1** → template **Universal 3D** → name `AshenVeil`.
 
 ## Step 2 — Drop repo in
 
@@ -20,7 +20,7 @@ Copy `Assets/_Project/` and `.gitignore` to the Unity project. Unity recompiles 
 
 ## Step 3 — Render pipeline
 
-Graphics: URP assigned. Color Space: Linear. Quality: High (PC), Low tier with HDR off.
+Graphics: URP 17.x assigned (Unity 6 default). Color Space: Linear. Quality: High (PC), Low tier with HDR off.
 
 ## Step 4 — Import assets (in order)
 
@@ -50,6 +50,8 @@ Graphics: URP assigned. Color Space: Linear. Quality: High (PC), Low tier with H
 
 Move each into `Assets/_Project/Art/...` after import.
 
+> **Unity 6 note:** if any package imports with pink materials, run **Edit → Rendering → Render Pipeline Converter → Built-in to URP**.
+
 ## Step 5 — Bootstrap scene
 
 New Scene Empty → `Scenes/Bootstrap.unity` → `[Game]` GameObject with `GameBootstrap` component. Build idx 0.
@@ -67,37 +69,37 @@ New Scene → `Scenes/Mission01_HollowWarden.unity`.
 4. 4 skeleton prefabs (Fantasy Monsters Bundle) spaced along corridor.
 5. Courtyard with 3 skeletons.
 6. Hollow Warden boss arena (large keep room). Place Hollow Warden boss prefab.
-7. Place a Bonfire prefab at start and after the boss.
-8. Drop a Cinemachine free-look 3rd-person camera, parent to player.
+7. Place a Bonfire prefab at start and after the boss. On each bonfire's `BonfireCheckpoint`, drag the child `BonfireEcho` reference into the `echo` field; assign `whisperBank` and (optionally) `firstRestBank`.
+8. **Unity 6 camera:** add a **CinemachineCamera** (3.x) with a **CinemachineOrbitalFollow** component, parented to the player. Set Look-At + Follow.
 9. `[Mission01Director]` GameObject with `Mission01Director.cs`. Wire bonfires + boss death event.
 10. Create `MissionData_M01.asset` with 7 objectives (GDD §6). Add to MissionDatabase.
 
 Build idx 3 (after Hub at 2).
 
-## Step 8 — AI proxy
+## Step 8 — Author the Echo line banks
 
-```bash
-cd server/copilot-proxy && cp .env.example .env  # set ANTHROPIC_API_KEY
-npm install && npm run dev
-```
+For each bonfire (or share across bonfires):
 
-## Step 9 — Echo Companion persona
+1. **Create → Inventix → Dialogue → Line Bank** → `LineBank_Echo_Generic.asset`.
+2. Fill `lines` with 25 hand-authored Echo whispers (voice guide: ancient, weary, occasionally amused; refer to player as 'small flame' or 'kindling').
+3. (Optional) `LineBank_Echo_FirstRest.asset` for first-rest variants.
+4. Drag the bank into the `BonfireEcho.whisperBank` field on each bonfire.
+5. (Optional) drop wav clips into the `voiceOver` array (parallel to `lines`).
 
-Create → Inventix → AI Copilot → Persona → `Persona_Echo.asset`. Paste system prompt from `05_AI_COPILOT_INTEGRATION.md`.
+## Step 9 — Playtest
 
-## Step 10 — Playtest
-
-Open Bootstrap → Play. New Game → M01 loads → fight 4 corridor skeletons → 3 courtyard skeletons → Hollow Warden 2-phase fight → Mission Complete.
+Open Bootstrap → Play. New Game → M01 loads → fight 4 corridor skeletons → 3 courtyard skeletons → Hollow Warden 2-phase fight → Mission Complete. Bonfires should fire an Echo whisper on first contact.
 
 ## Troubleshooting
 
 | Symptom | Fix |
 |---|---|
-| Pink materials | URP convert; rebuild lighting |
+| Pink materials | Render Pipeline Converter (Built-in → URP) |
+| `CinemachineFreeLook` missing | Use Unity 6's CinemachineCamera + CinemachineOrbitalFollow |
 | Boss never enters Phase 2 | HollowWardenBoss `Phase2HpThreshold` mis-wired |
 | Anime VFX hangs | Ensure Anime Powers VFX is in ObjectPool, not Instantiated |
-| Claude no reply | Proxy not running; check port 8787 |
+| Bonfire silent on rest | `BonfireEcho` reference not wired on `BonfireCheckpoint`, or `whisperBank` empty |
 
 ## After M1
 
-Tag `v0.1-mission1-playable`. Author M2 by duplicating scene + new MissionData asset + EnemyController references to Wyvern instead of Skeleton.
+Tag `v0.2.1-mission1-playable`. Author M2 by duplicating scene + new MissionData asset + EnemyController references to Wyvern instead of Skeleton.
