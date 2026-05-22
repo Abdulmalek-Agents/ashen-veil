@@ -11,7 +11,8 @@
 | **Target frame-rate** | 60 fps on mid-range PC |
 | **Mission 1 scope** | Tutorial duel → first bonfire → first Hollow Lord (tutorial boss) |
 | **Designed for** | 6 missions (one per Hollow Lord biome) |
-| **AI co-pilot** | Claude-powered Echo Companion (lore-master, hint-giver) |
+| **Runtime AI features** | **None** — the shipping game is fully offline and self-contained |
+| **AI in development** | Claude Code & Claude Agents are used by the studio to draft GDDs, generate C#, and write lore. See [docs/05_AI_ASSISTED_DEVELOPMENT.md](docs/05_AI_ASSISTED_DEVELOPMENT.md). |
 
 ## Why this game
 
@@ -29,9 +30,9 @@ Detailed evidence in [docs/01_IDEATION_AND_TRENDS.md](docs/01_IDEATION_AND_TREND
 ```
 ashen-veil/
 ├── README.md, CHANGELOG.md, LICENSE, .gitignore
-├── docs/  (7 critic-approved design docs)
-├── Assets/_Project/  (Unity-ready scripts, ScriptableObject guide, scenes/prefabs/art/audio folders)
-└── server/copilot-proxy/  (Claude API proxy)
+├── docs/                              (7 critic-approved design docs)
+└── Assets/_Project/                   (Unity-ready scripts, ScriptableObject guide, scenes/prefabs/art/audio folders)
+    └── Scripts/{Core, Dialogue, Gameplay, UI}
 ```
 
 ## Quick start
@@ -39,8 +40,9 @@ ashen-veil/
 1. Read `docs/07_UNITY_SETUP_GUIDE.md`.
 2. New Unity 2022.3 LTS URP project; copy `Assets/_Project/` in.
 3. Import: Fantasy Castle Environment, Stylized Dungeons, BoZo Characters, Fantasy Monsters Bundle, Stylized Fantasy Creatures #2, Anime Powers Pack, Magic Arsenal, Spells Pack, 100 Special Skills FX, Character Controller Pro, Traversal Pro, Realistic Blood VFX, Heat UI, Cutscene Engine, Skill Tree Builder — all in your Inventix inventory.
-4. `cd server/copilot-proxy && npm install && npm run dev`.
-5. Open `Scenes/Bootstrap.unity` → Play.
+4. Open `Scenes/Bootstrap.unity` → Play.
+
+> No proxy server, no API key, no internet config required.
 
 ## Status
 
@@ -49,6 +51,7 @@ ashen-veil/
 | Concept locked (3 critic cycles) | ✅ |
 | GDD v1.0 approved | ✅ |
 | Architecture & scripts | ✅ |
+| v0.2 — runtime LLM removed, scripted dialogue stack | ✅ |
 | Mission 1 scene authored | ⏳ |
 | Missions 2–6 outlined | ✅ (data-driven) |
 
